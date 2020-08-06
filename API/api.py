@@ -24,15 +24,16 @@ class PredictSentiment(Resource):
         ##uq_vectorized = model.vectorizer_transform(
             ##np.array([user_query]))
 
-        result = firebase.get('/DriverBehaviour',None)
+        result = firebase.get('/DriveBehaviour',None)
+        
         X_data = []
         for key in result:
-            X_data.append([result [key]['X_ACC'] ,
-                  result [key]['Y_ACC'] ,
-                  result [key]['Z_ACC'] ,
-                  result [key]['X_GYR'] ,
-                  result [key]['Y_GYR'] ,
-                  result [key]['Z_GYR']])
+            X_data.append([result [key]['_1X_Acelerometro'] ,
+                  result [key]['_1Y_Acelerometro'] ,
+                  result [key]['_1Z_Acelerometro'] ,
+                  result [key]['_2X_Giroscope'] ,
+                  result [key]['_2Y_Giroscope'] ,
+                  result [key]['_2Z_Giroscope']])
         X_data = np.array(X_data)
         poly = PolynomialFeatures(degree=2 , include_bias=False)
         X=poly.fit_transform(X_data)
