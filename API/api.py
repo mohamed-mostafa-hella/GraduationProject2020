@@ -13,14 +13,33 @@ api = Api(app)
 
 # Load Models
 # 5 models
-RFM_model = joblib.load('saved_Models/fm_RandomForestClassifier_model.sav') # Random Forest 
+RFM_model = joblib.load('saved_Models/RandomForestClassifier_model.sav') # Random Forest 
 LRM_model = joblib.load('saved_Models/LogisticRegression.sav') # Logistic regression
 SGDCM_model = joblib.load('saved_Models/SGDC.sav') # Stochastic gradient descent
 SVCM_model = joblib.load('saved_Models/svcmodel.sav') # Support vector machine
-NNM_model = keras.models.load_model('saved_Models/Keras.h5') # Artificial neural network
+NNM_model = keras.models.load_model('saved_Models/NNM.h5') # Artificial neural network
+RNM_model = keras.models.load_model('saved_Models/RNN.h5') # Recurrent neural network
 
 # fireBase Link
 firebase = firebase.FirebaseApplication('https://drive-behaviour.firebaseio.com/',None) # if there is no link will return None
+
+# -Reformat dataset to create windows with size 60 to create time sequence
+# -That is because of the output of the current record does 
+# not depend on the current input only but also the previous sequence (time sequence)
+# RNN
+def createWindows(X):
+    features_set = []
+    W_SIZE = 60
+    LENGTH = len(X)
+
+    for i in range(W_SIZE,LENGTH):
+        try:
+            xx = X[i-W_SIZE:i,:]
+            xx = np.array(xx)
+            features_set.append(xx)
+        except:
+            print("error in i = ",i)
+    return np.array(features_set) 
 
 # load data from fireBase
 def get_data(degree):
@@ -115,11 +134,23 @@ class NNM (Resource):
         # return predected events percent
         return count(predictions)
 
+# Recurrent neural network
+class RNN (Resource):
+    def get(self):
+        # get data
+        X = get_data(2)
+        # Reformat dataset
+        X = createWindows(X)
+        # get predection
+        predictions = RNM_model.predict_classes(X)
+        # return predected events percent
+        return count(predictions)
+
 # start class   
 class start (Resource):
     def get(self):
         print ("hi mmh")
-        return "welcome to our server please choose wich directio you want (add ( /rfm , /lrm , /sgdc , /svc , /nnm ) to your link )"
+        return "welcome to our server please choose wich directio you want (add ( /rfm , /lrm , /sgdc , /svc , /nnm ,/rnn ) to your link )"
 
 # add apis (creat links)
 api.add_resource(RFM, '/rfm') # link to Random Forest model
@@ -127,6 +158,7 @@ api.add_resource(LRM, '/lrm') # link to Logistic regression model
 api.add_resource(SGDC,'/sgdc') # link to Stochastic gradient descent model
 api.add_resource(SVC, '/svc') # link to Support vector machine model
 api.add_resource(NNM, '/nnm') # link to Artificial neural network model
+api.add_resource(RNN, '/rnn') # link to Artificial neural network model
 api.add_resource(start, '/') # link to start
 
 # run server

@@ -25,8 +25,7 @@ Our purpose was to establish a set of driving events that represents usual real-
 | Aggressive acceleration      | 12 |
 | Aggressive left turn         | 11 |
 | Aggressive right turn        | 11 |
-| Aggressive left lane change  | 4  |
-| Aggressive right lane change | 5  |
+| Aggressive lane change       | 9  |
 | Non-aggressive event         | 14 |
 | **Total**                    | **69** |
 
