@@ -150,7 +150,7 @@ class RNN (Resource):
 class start (Resource):
     def get(self):
         print ("hi mmh")
-        return "welcome to our server please choose wich directio you want (add ( /rfm , /lrm , /sgdc , /svc , /nnm ,/rnn ) to your link )"
+        return "welcome to our server please choose which direction you want (add ( /rfm , /lrm , /sgdc , /svc , /nn ,/rnn ) to your link )"
 
 # add apis (creat links)
 api.add_resource(RFM, '/rfm') # link to Random Forest model
