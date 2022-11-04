@@ -185,6 +185,6 @@ his patience and guidance throughout the semester.
 - [@Mohamed Mosad](https://github.com/Mohamed-Mosad)
 - [@Mohamed Shaban](https://github.com/Ghazidan1)
 - [@Mohamed Mostafa](https://github.com/mohamed-mostafa-hella)
-- [@Mohamed Samir](https://github.com/Mohamed-Mosad)
+- [@Mohamed Samir](https://github.com/samir101010)
 - [@Aya Sobhy](https://github.com/ayasobhyy)
 - [@Shrouk Nabil](https://github.com/ShroukNabil)
